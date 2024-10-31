@@ -65,7 +65,6 @@ func (s *Source[A, P]) Reconcile(ctx context.Context) (P, error) {
 	}
 
 	return p, nil
-
 }
 
 func getRepository(repo string) (*remote.Repository, error) {

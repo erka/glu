@@ -8,6 +8,18 @@ import (
 	"github.com/go-chi/chi/v5/middleware"
 )
 
+// TODO:
+// - GET /api/v1/pipelines/
+// - GET /api/v1/pipelines/{pipeline}/phases/
+// - GET /api/v1/pipelines/{pipeline}/phases/{phase}/instances/
+// - GET /api/v1/pipelines/{pipeline}/phases/{phase}/instances/{resource}
+// - POST /api/v1/pipelines/{pipeline}/phases/{phase}/instances/{resource}/reconcile
+// - GET /api/v1/pipelines/{pipeline}/resources/ - give state of resource in pipeline across phases
+// think of another name for app (ie: resource, etc)
+
+// instance is a an resource in a phase
+
+// this will hang off of the pipeline registry/workflow type
 // Server represents the API server
 type Server struct {
 	router *chi.Mux
@@ -29,7 +41,7 @@ func (s *Server) setupRoutes() {
 
 	// API routes
 	s.router.Route("/api/v1", func(r chi.Router) {
-		r.Get("/pipelines/{pipeline}/phases/{phase}/instances/{app}", s.getPipelineInstance)
+		r.Get("/pipelines/{pipeline}/phases/{phase}/instances/{resource}", s.getPipelineInstance)
 	})
 }
 
@@ -43,13 +55,13 @@ func (s *Server) getPipelineInstance(w http.ResponseWriter, r *http.Request) {
 	var (
 		pipeline = chi.URLParam(r, "pipeline")
 		phase    = chi.URLParam(r, "phase")
-		app      = chi.URLParam(r, "app")
+		resource = chi.URLParam(r, "resource")
 	)
 
 	response := map[string]string{
 		"pipeline": pipeline,
 		"phase":    phase,
-		"app":      app,
+		"resource": resource,
 	}
 
 	w.Header().Set("Content-Type", "application/json")
