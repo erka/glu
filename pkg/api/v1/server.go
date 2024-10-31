@@ -40,9 +40,11 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 // getPipelineInstance handles the GET request for pipeline instances
 func (s *Server) getPipelineInstance(w http.ResponseWriter, r *http.Request) {
-	pipeline := chi.URLParam(r, "pipeline")
-	phase := chi.URLParam(r, "phase")
-	app := chi.URLParam(r, "app")
+	var (
+		pipeline = chi.URLParam(r, "pipeline")
+		phase    = chi.URLParam(r, "phase")
+		app      = chi.URLParam(r, "app")
+	)
 
 	response := map[string]string{
 		"pipeline": pipeline,
